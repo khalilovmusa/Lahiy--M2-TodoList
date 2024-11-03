@@ -146,10 +146,12 @@ class TodoApp {
             }
             function drop(e) {
                 e.preventDefault();
+                let sortBtn = document.querySelector(".sort-btn");
                 const draggingItem = document.querySelector('.dragging');
                 if (draggingItem) {
                     draggingItem.classList.remove('dragging');
                 }
+                sortBtn.children[0].src = './images/sort-arrow-down-black.svg';
             }
 
             //!=> Calling the function;
