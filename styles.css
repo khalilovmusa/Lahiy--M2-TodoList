@@ -37,6 +37,7 @@ body {
     border-radius: 12px;
     max-height: 40vh; /* Optional: limit height of list */
     overflow-y: auto;
+    scrollbar-color: #9953F1;
 }
 .container {
     height: 50%;
@@ -56,7 +57,7 @@ body {
     content: '';
     position: absolute;
     top: 0;
-    height: 7%;
+    height: 8%;
     width: 100%;
     border-radius: 10px 10px 0 0;
 }
@@ -75,7 +76,7 @@ body {
 }
 .sort-icon-continer{
     width: 90%;
-    min-height: 5%;
+    min-height: 7%;
     position: relative;
 }
 .sort-btn{

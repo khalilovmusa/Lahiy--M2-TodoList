@@ -4,7 +4,6 @@ class TodoList {
     }
     add(todo) {
         this.todoList.push(todo);
-        console.log(this.todoList)
     }
     remove(index) {
         this.todoList.splice(index, 1);
@@ -26,10 +25,11 @@ class TodoApp {
     }
 
     init() {
+        this.inputContainer.style.display = "block";
         this.ul.style.display = "none";
         this.addTodoBtn.addEventListener("click", () => {
             // Toggle the input container visibility
-            this.inputContainer.style.display = 
+            this.inputContainer.style.display =
                 this.inputContainer.style.display === "block" ? "none" : "block";
 
             // Focus on input when shown
@@ -52,30 +52,34 @@ class TodoApp {
         //TODO=> Adding the sort method
 
         this.sortBtn.addEventListener("click", () => {
-            if(this.todoList.todoList.length <= 1 ){
+            if (this.todoList.todoList.length <= 1) {
                 alert("You must have at least 2 todos to sort");
-            }else{
+            } else {
                 this.sortBtn.children[0].src = './images/sort-arrow-up-black.svg';
+
+                let items = Array.from(this.ul.children);
+                console.log(items)
+                items.sort((a, b) => a.textContent.localeCompare(b.textContent));
+
                 this.ul.innerHTML = '';
-                this.todoList.todoList.sort().forEach((sortedTodo) => {
-                    this.addTodo(sortedTodo);
+                items.forEach((item) => {
+                    this.addTodo(item.textContent);
                 })
             }
         })
-
 
         this.addTodoBtn.addEventListener("click", () => this.addTodo());
     }
 
     addTodo(todoText) {
-        if(!todoText) { 
-            todoText = this.input.value.trim(); 
+        if (!todoText) {
+            todoText = this.input.value.trim();
             this.sortBtn.children[0].src = './images/sort-arrow-down-black.svg';
         }
 
         if (todoText) {
             this.todoList.add(todoText); // Add to TodoList array
-            
+
             // Create new list item elements
             let li = document.createElement("li");
             let deleteLi = document.createElement("button");
@@ -88,6 +92,7 @@ class TodoApp {
 
             li.textContent = todoText; // Set the text of the list item
             li.appendChild(deleteLi);
+            li.draggable = true;
 
             // Append new li to the ul
             this.ul.appendChild(li);
@@ -113,12 +118,48 @@ class TodoApp {
                 const index = Array.from(this.ul.children).indexOf(li);
                 this.todoList.remove(index); // Remove from TodoList array
                 li.remove(); // Remove the element from the DOM
-                
+
             });
 
+            // drag&drop start here
+            function addDragAndDropEvents(item) {
+                item.addEventListener('dragstart', dragStart);
+                item.addEventListener('dragover', dragOver);
+                item.addEventListener('drop', drop);
+            }
+            function dragStart(e) {
+                e.dataTransfer.setData('text/plain', e.target.innerHTML);
+                e.target.classList.add('dragging');
+            }
+            function dragOver(e) {
+                e.preventDefault();
+                const draggingItem = document.querySelector('.dragging');
+                const currentItem = e.target.closest('li');
+                if (currentItem && currentItem !== draggingItem) {
+                    const bounding = currentItem.getBoundingClientRect();
+                    const offset = e.clientY - bounding.top - bounding.height / 2;
+                    if (offset > 0) {
+                        currentItem.after(draggingItem);
+                    } else {
+                        currentItem.before(draggingItem);
+                    }
+                }
+            }
+            function drop(e) {
+                e.preventDefault();
+                const draggingItem = document.querySelector('.dragging');
+                if (draggingItem) {
+                    draggingItem.classList.remove('dragging');
+                }
+            }
+
+            //!=> Calling the function;
+
+            addDragAndDropEvents(li);
 
 
-        }else if(!todoText && this.inputContainer.style.display === "none"){
+
+        } else if (!todoText && this.inputContainer.style.display === "none") {
             alert("You have to write something!!");
         }
     }
