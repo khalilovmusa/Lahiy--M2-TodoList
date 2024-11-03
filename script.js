@@ -105,6 +105,9 @@ class TodoApp {
             // Delete functionality for each item
             deleteLi.addEventListener("click", () => {
                 const index = Array.from(this.ul.children).indexOf(li);
+                if(this.todoList.todoList.length - 1 === 0){
+                    this.ul.style.display = "none";
+                }
                 this.todoList.remove(index); // Remove from TodoList array
                 li.remove(); // Remove the element from the DOM
             });
