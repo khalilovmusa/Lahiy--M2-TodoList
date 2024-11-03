@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>To-Do List Project</title>
+</head>
+<body>
+    <div class="container">
+        <div class="main-part">
+            <h1 class="todoList-header">To-Do List</h1>
+            <div class="sort-icon-continer">
+                <button class="sort-btn">
+                    <img src="images/sort-arrow-down-black.svg" class="sort-icon">
+                </button>
+            </div>
+            <ul class="todo-list">
+                <!-- Todo items will be dynamically added here -->
+            </ul>
+            <div class="input-container" style="display: none;">
+                <input type="text" placeholder="Add your todo" class="todo-input">
+                <button class="collapse-btn"><img src="images/cross.svg"></button>
+            </div>
+            <button class="add-todo-btn">
+                <div class="add-todo-plus">+</div>Добавить
+            </button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
