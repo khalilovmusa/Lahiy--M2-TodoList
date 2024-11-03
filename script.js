@@ -58,7 +58,6 @@ class TodoApp {
                 this.sortBtn.children[0].src = './images/sort-arrow-up-black.svg';
 
                 let items = Array.from(this.ul.children);
-                console.log(items)
                 items.sort((a, b) => a.textContent.localeCompare(b.textContent));
 
                 this.ul.innerHTML = '';
